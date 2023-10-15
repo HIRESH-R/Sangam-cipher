@@ -1,0 +1,144 @@
+
+<html >
+<head>
+  <title>Pseudo code demo for sangam cipher iso 15919 IPA Basis</title>
+<style>body {
+  padding: 1em;
+}
+
+h1 {
+  text-align: center;
+}
+
+div {
+  padding-bottom: .5em;
+}
+
+#getButton {
+  font-size: 1.2em;
+}
+</style>
+</head>
+<body>
+
+		<section class="col-md-6">
+<div>
+  <h1>Pseudo code demo for sangam cipher iso 15919 IPA Basis</h1>
+  <p>
+    
+Convertor array
+    <br/>
+    
+அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறனக்ங்ச்ஞ்ட்ண்த்ந்ப்ம்ய்ர்ல்வ்ழ்ள்ற்ன் 
+  
+ Input =english text caps and small</p>
+  <p>
+   <div class="form-group row">
+    <div class="col-md-3">
+      <label for="iStr">Input String</label>
+     <input type="text" id="iStr" name="iStr" class="form-control" placeholder="Enter String to Shift">
+     </div>
+  <div class="col-md-3">
+  <label for="iIncrease">Shift by</label>
+     <input type="text" id="iIncrease" name="iIncrease" class="form-control" placeholder="Enter Number to Shift by">
+     </div>
+     <div class="col-md-5">
+  <label for="iResult">Result</label>
+     <input type="text" id="iResult" name="iResult" class="form-control" placeholder="Result Appears Here">
+     </div>
+  </div>
+      <div class="text-center">
+    <input type="button" id="getButton" class="btn btn-primary btn-large" value="Get New String">
+        </div
+  </p>
+</div>
+</section>			
+
+
+<script>
+
+    // Cesar Cipher
+// Shift each letter by a number of letters.
+// Case Sensitve
+// cesarStr(Pop, 2) outputs Rqr
+
+const getButton = document.getElementById("getButton")
+      ,iIncrease = document.getElementById("iIncrease")
+      ,iString = document.getElementById("iStr")
+      ,iResult = document.getElementById("iResult");
+
+function cesarStr(){
+    let s = iString.value
+    let k = parseInt(iIncrease.value)
+    console.log(s);
+    const cesarArr = s.split('');
+    let fnStr = '';
+    let alphaKey={
+        a: 1, b: 2, c: 3, d: 4, e: 5,f: 6, g: 7, h: 8, i: 9, j: 10, k: 11, 
+        l: 12, m: 13, n: 14,o: 15, p: 16, q: 17, r: 18, s: 19, t: 20, 
+        u: 21, v: 22, w: 23, x: 24, y: 25, z: 26,
+        A: 27, B: 28, C: 29, D: 30, E: 31, F: 32, G: 33, H: 34, I: 35, J: 36,
+        K: 37, L: 38, M: 39, N: 40, O: 41, P: 42, Q: 43, R: 44, S: 45, T: 46, 
+        U: 47, V: 48, W: 49, X: 50, Y: 51, Z: 52
+    }
+    let numKey={
+        1: 'அ', 2: 'ஆ', 3: 'இ', 4: 'ஈ', 5: 'உ', 6: 'ஊ', 7: 'எ', 8: 'ஐ', 9: 'ஒ', 10: 'ஓ', 
+        11: 'ஔ', 12: 'க்', 13: 'ங்', 14: 'ஏ', 15: 'ச்', 16: 'ஞ்', 17: 'ட்', 18: 'ண்', 19: 'த்', 
+        20: 'ந்', 21: 'ப்', 22: 'ம்', 23: 'ய்', 24: 'ர்', 25: 'ல்', 26: 'வ்',
+        27: 'ழ்', 28: 'ள்', 29: 'ற்', 30: 'ன்', 31: 'க', 32: 'ங', 33: 'ச', 34: 'ஞ', 35: 'ட',
+        36: 'ண', 37: 'த', 38: 'ந', 39: 'ப', 40: 'ம', 41: 'ய', 42: 'ர', 43: 'ல', 44: 'வ', 
+        45: 'ழ', 46: 'ள', 47: 'ற', 48: 'ன', 49: 'டூ', 50: 'ஞி', 51: 'ணே', 52: 'மோ'
+    }
+    // if(s.length== 1) return anum[s] || ' ';
+    // return s.split('').map(;);
+    for(let i = 0; i < cesarArr.length; ++i){
+        let regEx = /^[A-Za-z]+$/;
+        let x,y;
+        // Using Reg Exp to determine if char is not alpha
+        // If not alpha then add to string result without change
+        if(!cesarArr[i].match(regEx)) {
+            fnStr += cesarArr[i];
+        } else {
+            // Check to make sure value is not outside scope of lowercase range
+            if(alphaKey[cesarArr[i]] < 27 && alphaKey[cesarArr[i]] + k > 26){
+                //  console.log('-'+numKey[alphaKey[cesarArr[i]]]);
+                //  console.log((alphaKey[cesarArr[i]]+k)%26);
+                 x = alphaKey[cesarArr[i]]+k;
+                //  console.log(x%26);
+                fnStr += x%26 === 0? numKey[26] : numKey[(x)%26];
+                // console.log(fnStr);
+            // Check to make sure value is not outside scope of uppercase range
+            } else if(alphaKey[cesarArr[i]] < 53 && alphaKey[cesarArr[i]] + k > 52){
+                //  console.log(numKey[alphaKey[cesarArr[i]]])
+                //  console.log(52%alphaKey[cesarArr[i]]+26+k);
+                x = alphaKey[cesarArr[i]]+k;
+                // console.log(x%52);
+                // If result of number key = 0 or 26 then assume value is upper case 'Z'
+                // Else find uppercase alpha character
+                y = (x%52 === 0 || x%52 === 26) ? numKey[52] : (x%52 < 26 ? numKey[x%52+26] : numKey[x%52]);
+                // console.log(y);
+                // console.log(fnStr);
+                // fnStr += numKey[(alphaKey[cesarArr[i]]+k)%26+26]
+                fnStr += y;
+            } else {
+                fnStr += numKey[alphaKey[cesarArr[i]] + k];
+                // console.log(fnStr);
+            }
+        }
+            
+    }
+     // console.log(fnStr);
+     iResult.value = (fnStr);
+     // return fnStr;
+  
+}
+
+// console.log(cesarStr('Hello_World!', 4))
+
+getButton.addEventListener('click', cesarStr);
+
+
+</script>
+
+</body>
+</html>
